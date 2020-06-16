@@ -76,7 +76,9 @@ public class ArtsmiaController {
     @FXML
     void doCalcolaPercorso(ActionEvent event) {
     	txtResult.clear();
-    	try {
+    	
+    	//////////////////////RICORSIONE MIA
+    	/*try {
     		int author_id = Integer.parseInt(txtArtista.getText());
     		Autore a = new Autore(author_id);
     		if (!this.model.getVertici().contains(a)) {
@@ -84,14 +86,35 @@ public class ArtsmiaController {
 				return;
     		}
     		
+    		txtResult.appendText("Percorso più lungo: "+ this.model.trovaPercorso(author_id).size()+"\n");
     		for (Autore c : this.model.trovaPercorso(author_id)) {
-    			txtResult.appendText(c.getAutor_id()+"\n");
+    			txtResult.appendText(c.getAutor_id()+" ");
     		}
     		
     	} catch (NumberFormatException e) {
 			txtResult.appendText("Inserire codice artista numerico.");
 			return;
-		}
+		}*/
+    	
+    	////////////////////////RICORSIONE ALBERTO
+    	try {
+    		int author_id = Integer.parseInt(txtArtista.getText());
+    		Autore a = new Autore(author_id);
+    		if (!this.model.getVertici().contains(a)) {
+    			txtResult.appendText("L'artista non è nel grafo");
+				return;
+    		} 
+    		
+    		List<Autore> percorso = this.model.trovaPercorso(author_id);
+    		txtResult.appendText("Percorso più lungo: "+percorso.size()+"\n");
+    		for (Autore p : percorso) {
+    			txtResult.appendText(p+" ");
+    		}
+    		
+    	}catch (NumberFormatException e) {
+    			txtResult.appendText("Inserire codice artista numerico.");
+    			return;
+    		}
     	
     	
     }
@@ -107,10 +130,12 @@ public class ArtsmiaController {
     	this.model.creaGrafo(role);
     	txtResult.appendText("# vertici: "+this.model.vertexNumber()+" # archi: "+this.model.edgeNumber()+"\n\n");
     	
+    	btnCalcolaPercorso.setDisable(false);
     }
 
     public void setModel(Model model) {
     	this.model = model;
+    	btnCalcolaPercorso.setDisable(true);
     	this.boxRuolo.getItems().addAll(dao.elencoRuoli());
     }
 

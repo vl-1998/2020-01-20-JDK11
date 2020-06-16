@@ -55,7 +55,7 @@ public class Autore {
 
 	@Override
 	public String toString() {
-		return "autor_id=" + autor_id + ", role=" + role;
+		return String.valueOf(autor_id);
 	}
 	
 	
